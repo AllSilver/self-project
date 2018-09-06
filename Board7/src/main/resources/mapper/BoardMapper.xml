@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="org.zerock.mapper.BoardMapper">
+	<insert id="insert">
+		insert into Board (bName, bTitle, bContent)
+		values (#{bName}, #{bTitle},#{bContent} )
+	</insert>
+
+	<select id="read" resultType="org.zerock.dto.BDto">
+		select
+		bId, bName, bTitle, bContent, bHit, bGroup, bStep, bIndent
+		from
+		Board
+		where bid=#{bid}
+	</select>
+
+	<update id="update">
+		update Board set bContent=#{bContent}
+		where bId=#{bId}
+	</update>
+
+	<delete id="delete">
+		delete from Board where bId=#{bId}
+	</delete>
+
+	<select id="list" resultType="org.zerock.dao.BDao">
+  	<![CDATA[
+	  	select
+	  		 bId, bName, bTitle, bContent, bHit, bGroup, bStep, bIndent
+	  	from 
+	  		Board
+	  	where bId > 0
+	  	order by bid desc, regdate desc
+  	 ]]>
+	</select>
+	
+	 <!--03. 게시글 상세보기 조회 -->
+    <select id="content_view" resultType="org.zerock.dto.BDto">
+        SELECT * FROM Board 
+        WHERE bId = #{bId}
+    </select>
+    <!-- 04. 게시글 조회수 증가처리 -->
+    <update id="increaseViewcnt">
+        UPDATE Board SET viewcnt = viewcnt + 1 
+        WHERE bId = #{bId}
+    </update>
+
+</mapper>

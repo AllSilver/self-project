@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.zerock.member.MemberMapper">
+
+<resultMap type="org.zerock.dto.MDto" id="MDtoResult">
+        <result column="userId" property="userId" />
+        <result column="userPw" property="userPw" />
+    </resultMap>
+
+	<select id="loginOk" resultType="integer" parameterType="org.zerock.dto.MDto">
+	SELECT count(*) from tbl_member
+	<where>
+	userId = #{userId}
+	AND
+	userPw = #{userPw}
+	</where>
+	</select>
+
+	<select id="totalAccount" resultType="integer">
+	SELECT COUNT(*) FROM tbl_member
+	</select>
+	
+</mapper>
